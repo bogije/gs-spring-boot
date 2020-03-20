@@ -1,0 +1,42 @@
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: bogije-gs-spring-boot
+    chart: bogije-gs-spring-boot-0.0.1
+    heritage: Tiller
+    release: bogije-gs-spring-boot
+  name: bogije-gs-spring-boot
+  namespace: __PROJECT__
+spec:
+  replicas: 1
+  selector:
+    deploymentconfig: bogije-gs-spring-boot
+  template:
+    metadata:
+      labels:
+        app: bogije-gs-spring-boot
+        release: bogije-gs-spring-boot
+        deploymentconfig: bogije-gs-spring-boot
+    spec:
+      imagePullSecrets:
+      - name: docker-registry-credentials
+      containers:
+        - name: bogije-gs-spring-boot
+          image: "__IMAGE_TAG__"
+          imagePullPolicy: "Always"
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 600
+            timeoutSeconds: 60
+          readinessProbe:
+            tcpSocket:
+              port: http
+          resources:
+            {}

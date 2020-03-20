@@ -1,0 +1,23 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  creationTimestamp: null
+  labels:
+    app: bogije-gs-spring-boot
+    chart: bogije-gs-spring-boot
+    heritage: Tiller
+    release: bogije-gs-spring-boot
+  name: bogije-gs-spring-boot
+  namespace: __PROJECT__
+spec:
+  host: bogije-gs-spring-boot-__PROJECT__.apps.muthu8.perspectadojodevops.com
+  port:
+    targetPort: http
+  subdomain: ""
+  to:
+    kind: Service
+    name: bogije-gs-spring-boot
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress: null
